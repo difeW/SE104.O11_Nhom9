@@ -4,6 +4,7 @@
 // Hàm thực thi
 function execute($sql)
 {
+
     global $conn;
     $result = $conn->query($sql);
     if ($result) {

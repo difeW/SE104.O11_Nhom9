@@ -40,7 +40,6 @@
         text-align: center;
         background: rgba(255, 255, 255, 0.1);
         box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.3);
         border-right: 1px solid rgba(255, 255, 255, 0.2);
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         backdrop-filter: blur(10px)
@@ -131,7 +130,6 @@
     h1 {
         color: white;
         text-transform: uppercase;
-        font-weight: 500
     }
 
     .textbox {
@@ -157,7 +155,7 @@
 
     a:hover {
         text-decoration: none;
-        color: white
+        color: white;
     }
 
     .textbox input {
@@ -180,11 +178,12 @@
         cursor: pointer;
         margin: 12px 0;
         background: #b2b4b8;
-        border-radius: 5px
+        border-radius: 5px;
     }
 
     .btn:hover {
-        background: #6d768a
+        background-color: inherit !important;
+        border: 3px solid whitesmoke !important;
     }
 
     ::placeholder {
@@ -199,6 +198,27 @@
     .form p {
         font-size: 1.25rem;
         color: black
+    }
+
+    .bd-rd {
+        border: 10px solid;
+        border-image-source: linear-gradient(45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        border-image-slice: 1;
+        animation: gradient 5s ease infinite
+    }
+
+    @keyframes gradient {
+        0% {
+            background-position: 0 50%
+        }
+
+        50% {
+            background-position: 100% 50%
+        }
+
+        100% {
+            background-position: 0 50%
+        }
     }
 </style>
 
@@ -223,33 +243,29 @@
             $customer = [
                 'id' => $row['id'],
                 'name' => $row['name'],
-                'birthday' => $row['birthday'],
                 'phone' => $row['phone'],
                 'email' => $row['email'],
-                'address' => $row['address'],
                 'type' => $row['type'],
             ];
             $_SESSION['customer'] = $customer;
             if (isset($_SESSION['cart'])) {
                 header("Location: cart.php");
             } else {
-                header("Location: index.php");
+                header("Location: category.php");
             }
         } else {
             echo "<div class='form'><h3>Tên đăng nhập hoặc mật khẩu không đúng!</h3></br><a href='login.php'>Đăng nhập lại</a></div>";
         }
     } else {
     ?>
-        <div class=form>
+        <div class="form bd-rd">
             <form action method=post name=login>
                 <h3>Vui lòng đăng nhập để mua hàng!</h3>
                 <h1>Login</h1>
                 <div class=textbox>
-                    <i class="fas fa-user"></i>
                     <input type=text placeholder="Tên đăng nhập" id=username name=username required>
                 </div>
                 <div class=textbox>
-                    <i class="fas fa-lock"></i>
                     <input type=Password placeholder="Mật khẩu" id=password name=password required>
                 </div>
                 <input class=btn type=submit name=submit value="Đăng nhập">

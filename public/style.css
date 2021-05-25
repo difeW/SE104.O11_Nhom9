@@ -2445,7 +2445,7 @@ a#scrollUp:hover {
 .category-image img {
   z-index: 10;
   max-width: 100%;
-  height: auto;
+  height: 100%;
   width: auto;
 }
 .total-slider {

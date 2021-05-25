@@ -12,6 +12,8 @@ ob_start();
 $banner =  execute("SELECT * FROM  image WHERE type = 1 and status = 0 ORDER BY ordering")->fetch_all(MYSQLI_ASSOC);
 $payment =  execute("SELECT * FROM  image WHERE type = 3 and status = 0 ORDER BY ordering DESC limit 0,5")->fetch_all(MYSQLI_ASSOC);
 ?>
+
+
 <!doctype html>
 <html class="no-js" lang="en">
 <style>
@@ -160,6 +162,9 @@ $payment =  execute("SELECT * FROM  image WHERE type = 3 and status = 0 ORDER BY
     <link href="admin/public/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="admin/public/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
+<?php if (isset($_POST['logout'])) { ?>
+    unset($_SESSION['customer']);
+<?php } ?>
 
 <body class="home-4">
     <!--[if lt IE 8]>
@@ -226,6 +231,9 @@ $payment =  execute("SELECT * FROM  image WHERE type = 3 and status = 0 ORDER BY
                                 <li>
                                     <a class="btn btn-primary" style="color:white; border-radius: 10px; font-size:18px; margin-left: 7px" href="login.php" role="button">Đăng nhập</a>
                                     <a class="btn btn-primary" style="color:white; border-radius: 10px; font-size:18px; margin-left: 7px" href="register.php" role="button">Đăng Ký</a>
+
+                                    <!-- Small modal -->
+
                                 </li>
 
                             <?php } ?>
@@ -308,21 +316,38 @@ $payment =  execute("SELECT * FROM  image WHERE type = 3 and status = 0 ORDER BY
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-            <div class="modal-dialog">
-                <div class="loginmodal-container">
-                    <h1>Login to Your Account</h1><br>
-                    <form>
-                        <input type="text" name="user" placeholder="Username">
-                        <input type="password" name="pass" placeholder="Password">
-                        <input type="submit" name="login" class="login loginmodal-submit" value="Login">
-                    </form>
 
-                    <div class="login-help">
-                        <a href="#">Register</a> - <a href="#">Forgot Password</a>
+        <button type="button"   class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+            Open modal
+        </button>
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Modal Heading</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
+
+                    <div class="modal-body">
+                        Modal body..
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+
                 </div>
             </div>
         </div>
+        <script>
+            $('#myModal').on('shown.bs.modal', function() {
+                $('#myInput').trigger('focus')
+            })
+        </script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        </head>
         <!-- main-menu-area-end -->
     </header>
