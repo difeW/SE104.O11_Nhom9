@@ -35,7 +35,7 @@ include 'header.php';
 </div>
 <!-- entry-header-area-end -->
 <!-- coupon-area-area-start -->
-<!-- <div class="coupon-area mb-70">
+<!--<div class="coupon-area mb-70">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
@@ -314,16 +314,19 @@ include 'header.php';
 									</thead>
 									<tbody>
 										<?php if (isset($_SESSION['cart'])) { ?>
-											<?php foreach ($_SESSION['cart'] as $key => $value) { ?>
-												<tr class="cart_item">
-													<td class="product-name">
-														<?php echo $value['name']; ?> <strong class="product-quantity"> × <?php echo $value['quantity']; ?></strong>
-													</td>
-													<td class="product-total">
-														<span class="amount price"><?php echo $value['quantity'] * $value['price'] ?></span>
-													</td>
-												</tr>
-											<?php } ?>
+											<?php foreach ($_SESSION['cart'] as $key => $value) {
+												if ($value['quantity'] > 0) {
+											?>
+													<tr class="cart_item">
+														<td class="product-name">
+															<?php echo $value['name']; ?> <strong class="product-quantity"> × <?php echo $value['quantity']; ?></strong>
+														</td>
+														<td class="product-total">
+															<span class="amount price"><?php echo $value['quantity'] * $value['price'] ?></span>
+														</td>
+													</tr>
+											<?php }
+											} ?>
 										<?php } ?>
 									</tbody>
 									<tfoot>
@@ -421,6 +424,7 @@ include 'header.php';
 								<p>Cảm ơn bạn! Đơn hàng đã đặt thành công!</p>
 								<p>Chúng tôi sẽ xác nhận và giao hàng sớm nhất đến bạn!</p>
 								<p>Quay lại<a href="index.php"> trang chủ </a> để mua sắm tiếp nhé!.</p>
+								<?php mail($email, 'Đơn hàng đã được ghi lại !', 'Demo') ?>
 							</div>
 						<?php } else { ?>
 							<div class="text-success text-center" style="padding-bottom: 15px; font-size: 20px;">

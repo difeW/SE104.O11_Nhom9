@@ -187,7 +187,7 @@ if (isset($_GET['name'])) {
 		$id = $_GET['id'];
 
 		// $sql = "SELECT * FROM product WHERE id = $id";
-		$sql = "SELECT p.id, p.name, p.price, p.sale_price, p.mota, p.anh_bia, p.anh_phu, p.created, p.updated, p.quantity, p.lang, c.name AS 'cate_name', p.tacgia_id, p.nxb_id  
+		$sql = "SELECT p.id, p.name, p.price, p.sale_price, p.mota, p.anh_bia, p.anh_phu, p.created, p.updated, p.quantity, p.lang, c.name AS 'cate_name', p.tacgia_id, p.nxb_id
 		FROM product p
 		INNER JOIN category c ON p.cate_id = c.id
 		WHERE p.id =  $id";
@@ -226,20 +226,20 @@ if (isset($_GET['name'])) {
 					<div class="col-lg-8 col-md-8 col-sm-6 col-xs-12" id="detail">
 						<div class="product-info-main">
 							<div class="page-title">
-								<h1><?php echo $product["name"]; ?></h1>
+								<h1><?php echo $product['name']; ?></h1>
 							</div>
 							<div class="product-info-stock-sku">
-								<p>Danh mục: <?php echo $product["cate_name"] ?></p>
-								<p>Số lượng: <?php echo $product["quantity"] ?></p>
-								<p>Lượt xem: <span class="view"><?php echo $product["quantity"] ?></span></p>
+								<p>Danh mục: <?php echo $product['cate_name'] ?></p>
+								<p>Số lượng: <?php echo $product['quantity'] ?></p>
+								<p>Lượt xem: <span class="view"><?php echo $product['quantity'] ?></span></p>
 							</div>
 							<div class="product-info-price">
 								<div class="price-final">
 									<?php if ($product['sale_price'] > 0) { ?>
-										<span class="price"><?php echo $product["sale_price"]; ?></span>
-										<span class="price old-price"><?php echo $product["price"]; ?></span>
+										<span class="price"><?php echo $product['sale_price']; ?></span>
+										<span class="price old-price"><?php echo $product['price']; ?></span>
 									<?php } else { ?>
-										<span class="price"><?php echo $product["price"]; ?></span>
+										<span class="price"><?php echo $product['price']; ?></span>
 									<?php } ?>
 								</div>
 							</div>

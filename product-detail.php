@@ -6,7 +6,7 @@ if (isset($_GET['id'])) {
 	$id = $_GET['id'];
 
 	// $sql = "SELECT * FROM product WHERE id = $id";
-	$sql = "SELECT p.id, p.name, p.price, p.sale_price, p.mota, p.anh_bia, p.anh_phu, p.created,p.cate_id, p.updated,p.view, p.quantity, p.lang, c.name AS 'cate_name', p.tacgia_id, p.nxb_id  
+	$sql = "SELECT p.id, p.name, p.price, p.sale_price, p.mota, p.anh_bia, p.anh_phu, p.created,p.cate_id, p.updated,p.view, p.quantity, p.lang, c.name AS 'cate_name', p.tacgia_id, p.nxb_id
 	FROM product p
 	INNER JOIN category c ON p.cate_id = c.id
 	WHERE p.id =  $id";
@@ -17,18 +17,26 @@ if (isset($_GET['id'])) {
 	} else {
 		$anhphu = [];
 	}
-
+	$cate_id = $product['cate_id'];
+	$cate_info = execute("SELECT * FROM category WHERE id = $cate_id")->fetch_assoc();
 	$view_update = $product["view"] + 1;
 	$pID = $product["id"];
 	$sql1 = "UPDATE product SET view=$view_update WHERE id=$pID";
 	execute($sql1);
+	$big_img_src = "admin/public/image/big-product/";
+	$check_img_exist = file_exists($big_img_src . $product['anh_bia']);
+	if ($check_img_exist == 'true') {
+		$img_src = "admin/public/image/big-product/";
+	} else {
+		$img_src = "admin/public/image/product/";
+	}
 } else {
 	echo 'Không tồn tại';
 }
 
 ?>
 <!-- breadcrumbs-area-start -->
-<!-- <div class="breadcrumbs-area mb-70">
+<div class="breadcrumbs-area mb-70">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
@@ -47,29 +55,90 @@ if (isset($_GET['id'])) {
 <div class="product-main-area mb-70">
 	<div class="container">
 		<div class="row">
+			<div class="col-lg-3 hidden-md hidden-sm hidden-xs">
+				<div class="left-title mb-20">
+					<h4>Danh mục</h4>
+				</div>
+				<div class="left-menu mb-30" style="text-transform:uppercase;">
+					<ul>
+						<!-- ham list phu luc-->
+						<?php foreach ($category as $key => $value) { ?>
+							<?php
+							$cate_idd = $value['id'];
+							$sub = execute("SELECT * FROM category WHERE parent_id = $cate_idd");
+							$count = count(execute("SELECT p.id FROM product p, category c
+										WHERE p.cate_id = c.id and p.cate_id IN (SELECT id FROM category WHERE parent_id = $cate_idd OR id = $cate_idd)")->fetch_all(MYSQLI_ASSOC));
+							?>
+							<li style="margin-left:20px"><a href="category.php?cate_id=<?php echo $value['id']; ?>"><?php echo mb_convert_case($value['name'], MB_CASE_UPPER) . PHP_EOL; ?></a></li>
+						<?php } ?>
+					</ul>
+				</div>
+				<div class="left-title mb-20">
+					<h4>Mua nhiều</h4>
+				</div>
+				<div class="random-area mb-30" style="margin-right:20px">
+					<div class="product-active-2 owl-carousel">
+						<?php
+						$limit = 3;
+						for ($i = 0; $i < $limit; $i++) {
+
+							$start =  $i * $limit;
+							$trending_pro = execute("SELECT * FROM product ORDER BY view DESC LIMIT $start,$limit")->fetch_all(MYSQLI_ASSOC);
+						?>
+							<div class="product-total-2">
+								<?php foreach ($trending_pro as $value) { ?>
+									<div class="single-most-product bd mb-18">
+										<div class="most-product-img">
+											<a href="product-detail.php?id=<?php echo $value['id'] ?>"><img src="admin/public/image/product/<?php echo $value['anh_bia'] ?>" alt="book" /></a>
+										</div>
+										<div class="most-product-content">
+											<h4><a href="product-detail.php?id=<?php echo $value['id'] ?>"><?php echo $value['name'] ?></a></h4>
+											<div class="product-price">
+												<ul>
+													<?php if ($value['sale_price'] > 0) { ?>
+														<li class="price"><?php echo $value['sale_price']; ?></li>
+														<li class="price old-price"><?php echo $value['price']; ?></li>
+													<?php } else { ?>
+														<li class="price"><?php echo $value['price']; ?></li>
+													<?php } ?>
+												</ul>
+											</div>
+										</div>
+									</div>
+								<?php } ?>
+							</div>
+						<?php } ?>
+					</div>
+				</div>
+				<div class="banner-area mb-30" style="margin-right: 20px;">
+					<div class="banner-img-2">
+						<a href="#"><img src="admin/public/image/banner/<?php echo $banner[0]['img_link'] ?>" alt="banner" /></a>
+					</div>
+				</div>
+			</div>
 			<div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
 				<!-- product-main-area-start -->
 				<div class="product-main-area" id="detail_pro">
 					<div class="row">
-						<div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+						<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
 							<div class="flexslider">
 								<ul class="slides">
 									<li data-thumb="<?php echo 'admin/public/image/product/';
 													echo $product['anh_bia']; ?>">
-										<img class="product-detail-img" src="<?php echo 'admin/public/image/product/';
-																				echo $product['anh_bia']; ?>" />
+										<img class="product-detail-img" id="product-img" src="<?php echo $img_src;
+																								echo $product['anh_bia']; ?>" />
 									</li>
 									<?php foreach ($anhphu as $key => $value) : ?>
-										<li data-thumb="<?php echo 'admin/public/image/product/';
-														echo $value; ?>">
-											<img src="<?php echo 'admin/public/image/product/';
-														echo $value; ?>" />
+										<li class="flex-img" data-thumb="<?php echo 'admin/public/image/product/';
+																			echo $value; ?>">
+											<img class="product-detail-img" id="product-img" src="<?php echo 'admin/public/image/product/';
+																									echo $value; ?>" />
 										</li>
 									<?php endforeach ?>
 								</ul>
 							</div>
 						</div>
-						<div class="col-lg-7 col-md-7 col-sm-6 col-xs-12">
+						<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
 							<div class="product-info-main">
 								<div class="page-title">
 									<h1><?php echo $product["name"]; ?></h1>
@@ -109,23 +178,37 @@ if (isset($_GET['id'])) {
 											<input class="qty" type="hidden" value="add" name="action">
 											<input class="qty" type="number" value="1" name="quantity">
 										</div>
-										<a style="cursor: pointer;" onclick="btn.click()">Add to cart</a>
+										<a style="cursor: pointer;color:#fff;" onclick="btn.click()">Add to cart</a>
 										<button type="submit" name="" id="btn" style="display:none"></button>
 
 									</form>
 								</div>
 								<div class="product-social-links">
-									<!-- <div class="product-addto-links">
-										<a href="#"><i class="fa fa-heart"></i></a>
-										<a href="#"><i class="fa fa-pie-chart"></i></a>
-										<a href="#"><i class="fa fa-envelope-o"></i></a>
-									</div> -->
+									<div class="product-addto-links">
+										<form action="#" method="GET" class="fav">
+											<div class="product-button">
+												<?php if (isset($_SESSION['customer'])) {
+													$result = $conn->query("SELECT * FROM fav WHERE user_id = '" . $user_id . "' AND product_id = '" . $pID . "'");
+													$numrows = $result->num_rows;
+													if ($numrows == 0) { ?>
+														<button type='button' class="add-to-cart" id="add-to-fav" onclick="addToFav(<?php echo $pID; ?>,<?php echo $user_id; ?>, 'like')" name="<?php echo "p" . $pID; ?>"><i class="fa fa-heart"></i></button>
+													<?php } else { ?>
+														<button type='button' class="add-to-cart dislike" id="add-to-fav" onclick="addToFav(<?php echo $pID; ?>,<?php echo $user_id; ?>, 'unlike')" name="<?php echo "p" . $pID; ?>"><i class="fa fa-heart"></i></button>
+												<?php
+													}
+												} ?>
+										</form>
+									</div>
 									<div class="product-addto-links-text">
-										<p><?php echo $product["mota"]; ?></p>
 									</div>
 								</div>
 							</div>
 						</div>
+					</div>
+				</div>
+				<div class="product-social-links">
+					<div class="product-addto-links-text">
+						<p><?php echo $product["mota"]; ?></p>
 					</div>
 				</div>
 				<!-- product-main-area-end -->
@@ -188,51 +271,102 @@ if (isset($_GET['id'])) {
 				</div>
 				<!-- new-book-area-start -->
 			</div>
-			<div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
-				<div class="shop-left" id="shop-left">
-					<div class="left-title mb-20">
-						<h4>Sản phẩm liên quan</h4>
-					</div>
-					<div class="random-area mb-30">
-						<div class="product-active-2 owl-carousel">
-							<?php
-							$limit = 3;
-							for ($i = 0; $i < $limit; $i++) {
-								$cate = $product['cate_id'];
-								$start =  $i * $limit;
-								$random_pro3 = execute("SELECT p.*,c.name as 'cate_name' FROM product p,category c WHERE p.cate_id = c.id and c.id = $cate LIMIT $start,$limit")->fetch_all(MYSQLI_ASSOC);
 
-							?>
-								<div class="product-total-2">
-									<?php foreach ($random_pro3 as $value) { ?>
-										<div class="single-most-product bd mb-18">
-											<div class="most-product-img">
-												<a href="product-detail.php?id=<?php echo $value['id'] ?>"><img src="admin/public/image/product/<?php echo $value['anh_bia'] ?>" alt="book" /></a>
-											</div>
-											<div class="most-product-content">
-												<h4><a href="product-detail.php?id=<?php echo $value['id'] ?>"><?php echo $value['name'] ?></a></h4>
-												<div class="product-price">
-													<ul>
-														<?php if ($value['sale_price'] > 0) { ?>
-															<li class="price"><?php echo $value['sale_price']; ?></li>
-															<li class="price old-price"><?php echo $value['price']; ?></li>
-														<?php } else { ?>
-															<li class="price"><?php echo $value['price']; ?></li>
-														<?php } ?>
-													</ul>
-												</div>
-											</div>
-										</div>
-									<?php } ?>
-								</div>
-							<?php } ?>
-						</div>
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
 </div>
+<div id="myModal3" class="modal">
+	<div class="img-content">
+		<span class="close">&times;</span>
+		<img class="product-detail-img" id="product-detail-img" src="<?php echo $img_src;
+																		echo $product['anh_bia']; ?>" />
+	</div>
+</div>
+<style>
+	#add-to-cart,
+	#clone-btn {
+		display: none !important;
+	}
+
+	#myBtn {
+		display: none;
+	}
+
+	.center-modal {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+	}
+
+	#product-img {
+		cursor: pointer;
+		transition: 0.3s;
+	}
+
+	#product-img:hover {
+		opacity: 0.5;
+	}
+
+	.img-content {
+		margin: auto;
+		display: block;
+		width: 80%;
+		max-width: 800px;
+	}
+
+	.img-content {
+		animation-name: zoom;
+		animation-duration: 0.6s;
+	}
+
+	@keyframes zoom {
+		from {
+			transform: scale(0)
+		}
+
+		to {
+			transform: scale(1)
+		}
+	}
+
+	.close {
+		position: absolute;
+		top: 15px;
+		right: 35px;
+		color: #f1f1f1;
+		font-size: 40px;
+		font-weight: bold;
+		transition: 0.3s;
+	}
+
+	@media only screen and (max-width: 700px) {
+		.modal-content {
+			width: 100%;
+		}
+	}
+</style>
+<script>
+	var modal = document.getElementById("myModal3");
+
+	// Get the image and insert it inside the modal - use its "alt" text as a caption
+	var img = document.getElementById("product-img");
+	var modalImg = document.getElementById("product-detail-img");
+	var span = document.getElementsByClassName("close")[0];
+	img.onclick = function() {
+		modal.style.display = "block";
+		modalImg.src = this.src;
+		modal.addClass("center-modal");
+	}
+
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function() {
+		modal.style.display = "none";
+	}
+</script>
 <!-- product-main-area-end -->
 
 

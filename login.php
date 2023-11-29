@@ -33,7 +33,7 @@
 
     .form {
         width: 700px;
-        margin: 15rem auto;
+        margin: 13rem auto;
         border-radius: 30px;
         padding: 20px;
         justify-content: center;
@@ -79,12 +79,14 @@
         font-size: 25px;
         border-radius: 25px;
         margin-top: 10px;
-        cursor: pointer
+        cursor: pointer;
+        -webkit-appearance: none;
     }
 
     input[type='submit']:hover {
         background-color: black;
-        color: white
+        color: white;
+
     }
 
     body {
@@ -171,7 +173,7 @@
 
     .btn {
         width: 50%;
-        border: 0;
+        border: none;
         color: white;
         padding: 5px;
         font-size: 18px;
@@ -179,12 +181,20 @@
         margin: 12px 0;
         background: #b2b4b8;
         border-radius: 5px;
+        transition: 0.5s;
     }
 
     .btn:hover {
         background-color: inherit !important;
-        border: 3px solid whitesmoke !important;
+        transform: translateY(-8px);
     }
+
+    .btn:active,
+    .btn:focus,
+    .btn:target {
+        transform: translateY(8px);
+    }
+
 
     ::placeholder {
         color: black
@@ -203,7 +213,7 @@
     .bd-rd {
         border: 10px solid;
         border-image-source: linear-gradient(45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-        border-image-slice: 1;
+        border-image-slice: 4;
         animation: gradient 5s ease infinite
     }
 
@@ -230,10 +240,8 @@
     //khởi động session
     if (isset($_POST['submit'])) {
         $username = stripslashes($_REQUEST['username']); // để bỏ dấu /
-        echo $username;
         $username = mysqli_real_escape_string($conn, $username); // php chuyển xuống cho mysql xử lí
         $password = stripslashes($_REQUEST['password']);
-        echo $password;
         $password = mysqli_real_escape_string($conn, $password);
         $query = "SELECT * FROM `account` WHERE (phone='$username' or email='$username') and password='$password'";
         $result = mysqli_query($conn, $query); //or die(mysql_error());
@@ -244,8 +252,10 @@
                 'id' => $row['id'],
                 'name' => $row['name'],
                 'phone' => $row['phone'],
+                'birthday' => $row['birthday'],
                 'email' => $row['email'],
-                'type' => $row['type'],
+                'address' => $row['address'],
+                'type' => $row['type']
             ];
             $_SESSION['customer'] = $customer;
             if (isset($_SESSION['cart'])) {

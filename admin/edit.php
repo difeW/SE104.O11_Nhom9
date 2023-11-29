@@ -44,10 +44,14 @@ if (isset($_GET['name'])) {
 			$resizeObj = new resize('public/image/product/' . $image);
 
 			// *** 2) Resize image (options: exact, portrait, landscape, auto, crop)
-			$resizeObj->resizeImage(350, 449, 'exact');
-
+			$resizeObj->resizeImage(1200, 1200, 'auto');
+			$resizeObj->saveImage('public/image/big-product/' . $image, 100);
+			// *** 2) Resize image (options: exact, portrait, landscape, auto, crop)
+			$resizeObj->resizeImage(270, 270, 'auto');
 			// *** 3) Save image
 			$resizeObj->saveImage('public/image/product/' . $image, 100);
+			$resizeObj->resizeImage(150, 150, 'auto');
+			$resizeObj->saveImage('public/image/mini-product/' . $image, 100);
 		}
 	} else {
 		$image = $product['anh_bia'];
@@ -812,7 +816,7 @@ if (isset($_GET['name'])) {
 								</div>
 							</div>
 							<div class="col-md-12 text-center">
-								<button type="submit" class="btn btn-success m-2" onclick="getprice()">Thêm Tin</button>
+								<button type="submit" class="btn btn-success m-2">Thêm Tin</button>
 							</div>
 						</form>
 					</div>

@@ -25,12 +25,14 @@ if (isset($_GET['name'])) {
 		if (file_exists('public/image/product/' . $image)) {
 			// *** 1) Initialize / load image
 			$resizeObj = new resize('public/image/product/' . $image);
-
+			$resizeObj->resizeImage(1200, 1200, 'auto');
+			$resizeObj->saveImage('public/image/big-product/' . $image, 100);
 			// *** 2) Resize image (options: exact, portrait, landscape, auto, crop)
-			$resizeObj->resizeImage(480, 480, 'auto');
-
+			$resizeObj->resizeImage(270, 270, 'auto');
 			// *** 3) Save image
 			$resizeObj->saveImage('public/image/product/' . $image, 100);
+			$resizeObj->resizeImage(150, 150, 'auto');
+			$resizeObj->saveImage('public/image/mini-product/' . $image, 100);
 		}
 	} else {
 		$image = '';
@@ -594,6 +596,7 @@ if (isset($_GET['name'])) {
 												<label for="">Loại ảnh</label>
 												<select class="form-control" name="type">
 													<option value="0">Slide</option>
+													<option value="1">Banner</option>
 													<option value="2">Post</option>
 												</select>
 											</div>
@@ -648,9 +651,9 @@ if (isset($_GET['name'])) {
 				VALUES($id, '$title', '$content', $ordering, $status)";
 			$result = execute($sql);
 			if ($result == 1) {
-				echo "Thêm mới không thành công";
+				echo "Thêm mới thành công";
 			} else {
-				echo $result;
+				echo "Thêm thất bại";
 			}
 		}
 	} else {
@@ -709,7 +712,7 @@ if (isset($_GET['name'])) {
 								</div>
 							</div>
 							<div class="col-md-12 text-center">
-								<button type="submit" class="btn btn-success m-2" onclick="getprice()">Thêm Tin</button>
+								<button type="submit" class="btn btn-success m-2">Thêm Tin</button>
 							</div>
 						</form>
 					</div>

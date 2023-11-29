@@ -69,11 +69,12 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
+				<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
 					<div class="buttons-cart mb-30">
 						<ul>
 							<li><a href="javascript:{}" onclick="document.getElementById('update').submit();">Cập nhật giỏ hàng</a></li>
 							<li><a href="category.php">Tiếp tục mua sắm</a></li>
+							<li><a href="xuli-cart.php?action=clear">Xóa toàn bộ giỏ hàng</a></li>
 						</ul>
 					</div>
 		</form>
@@ -83,17 +84,16 @@
 			<p>Nhập mã phiếu giảm giá nếu có.</p>
 			<form action="cart.php" method="GET">
 				<input type="text" placeholder="Coupon code" name="coupon">
-				<a href="">Nhập</a> 
+				<a href="">Nhập</a>
 			</form>
 		</div> -->
 	</div>
-	<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+	<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 		<div class="cart_totals">
 			<h2>Tạm tính</h2>
 			<table>
 				<tbody>
 					<tr class="cart-subtotal">
-						<!-- LẤY TIỀN ĐƠN -->
 						<th>Tổng cộng</th>
 						<td>
 							<span class="amount price"><?php echo isset($_SESSION['total_cart']) ? $_SESSION['total_cart'] : 0; ?></span>
@@ -102,12 +102,12 @@
 					<tr class="cart-subtotal">
 						<!-- LẤY PHIẾU GIẢM GIÁ -->
 						<?php
-							$payment = 0;
-							$code = 0;
-							//không sử dụng payment
-							(isset($_GET['payment'])) ? $payment = $_GET['payment'] : $payment;
-							//sử dụng code=số tiền giảm giá. Ví dụ: $code=-50000
-							(isset($_GET['code'])) ? $code = $_GET['code'] : $code;
+						$payment = 0;
+						$code = 0;
+						//không sử dụng payment
+						(isset($_GET['payment'])) ? $payment = $_GET['payment'] : $payment;
+						//sử dụng code=số tiền giảm giá. Ví dụ: $code=-50000
+						(isset($_GET['code'])) ? $code = $_GET['code'] : $code;
 						?>
 						<th>Phiếu giảm giá</th>
 						<td>

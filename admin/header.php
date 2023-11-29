@@ -111,7 +111,6 @@ if (!isset($_SESSION['admin'])) {
                 <div id="collapseTables2" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Admin:</h6>
-                        <a class="collapse-item" href="register_edit.php">Profile</a>
                         <a class="collapse-item" href="register.php">Admin Profile</a>
                     </div>
                 </div>

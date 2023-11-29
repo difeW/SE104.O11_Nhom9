@@ -1,8 +1,7 @@
 <?php
 include 'config/funtion.php';
 require 'config/connect.php';
-
-$id = $_SESSION['customer']['id'];
+$id = $_POST["id"];
 $result = execute("SELECT * FROM product WHERE id = $id")->fetch_assoc();
 ?>
 <!-- Modal -->

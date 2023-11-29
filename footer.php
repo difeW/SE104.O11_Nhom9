@@ -32,7 +32,7 @@
 									<h3>SỨ MỆNH</h3>
 								</div>
 								<div class="footer-mid-menu">
-									<p style="color:black; text-align: left;">Chúng tôi thành lập với sứ mệnh mang kho tàng kiến thức xã hội đến cho mọi người thông qua những cuốn sách với nhiều thể loại khác nhau.</p>
+									<p style="color:black; text-align: left;font-size: 14px;">Chúng tôi thành lập với sứ mệnh mang kho tàng kiến thức xã hội đến cho mọi người thông qua những cuốn sách với nhiều thể loại khác nhau.</p>
 								</div>
 							</div>
 						</div>

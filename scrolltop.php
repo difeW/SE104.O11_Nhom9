@@ -24,7 +24,7 @@
             /* Remove borders */
             outline: none;
             /* Remove outline */
-            background-color: red;
+            background-color: #f21852;
             /* Set a background color */
             color: white;
             /* Text color */
@@ -36,17 +36,20 @@
             /* Rounded corners */
             font-size: 18px;
             /* Increase font size */
+            height: 60px;
+            width: 60px;
         }
 
         #myBtn:hover {
-            background-color: #555;
+            background-color: #fff;
+            color: #f21852;
             /* Add a dark-grey background on hover */
         }
     </style>
 </head>
 
 <body>
-    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+    <button type='button' id="myBtn" title="Go to top"><i style="font-size:25px" class="fa fa-shopping-bag"></i></button>
 
 </body>
 <script>
@@ -58,7 +61,7 @@
     };
 
     function scrollFunction() {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        if (document.body.scrollTop >= 0 || document.documentElement.scrollTop >= 0) {
             mybutton.style.display = "block";
         } else {
             mybutton.style.display = "none";
@@ -66,64 +69,6 @@
     }
 
     // When the user clicks on the button, scroll to the top of the document
-    function topFunction() {
-        document.body.scrollTop = 0; // For Safari
-        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-    }
-</script>
-<script>
-    window.onload = function() {
-
-        const easeInCubic = function(t) {
-            return t * t * t
-        }
-        const scrollElems = document.getElementsByClassName('scroll');
-
-
-        //console.log(scrollElems);
-        const scrollToElem = (start, stamp, duration, scrollEndElemTop, startScrollOffset) => {
-            //debugger;
-            const runtime = stamp - start;
-            let progress = runtime / duration;
-            const ease = easeInCubic(progress);
-
-            progress = Math.min(progress, 1);
-            console.log(startScrollOffset, startScrollOffset + (scrollEndElemTop * ease));
-
-            const newScrollOffset = startScrollOffset + (scrollEndElemTop * ease);
-            window.scroll(0, startScrollOffset + (scrollEndElemTop * ease));
-
-            if (runtime < duration) {
-                requestAnimationFrame((timestamp) => {
-                    const stamp = new Date().getTime();
-                    scrollToElem(start, stamp, duration, scrollEndElemTop, startScrollOffset);
-                })
-            }
-        }
-
-        for (let i = 0; i < scrollElems.length; i++) {
-            const elem = scrollElems[i];
-
-            elem.addEventListener('click', function(e) {
-                e.preventDefault();
-                const scrollElemId = e.target.href.split('#')[1];
-                const scrollEndElem = document.getElementById(scrollElemId);
-
-                const anim = requestAnimationFrame(() => {
-                    const stamp = new Date().getTime();
-                    const duration = 1200;
-                    const start = stamp;
-
-                    const startScrollOffset = window.pageYOffset;
-
-                    const scrollEndElemTop = scrollEndElem.getBoundingClientRect().top;
-
-                    scrollToElem(start, stamp, duration, scrollEndElemTop, startScrollOffset);
-                    // scrollToElem(scrollEndElemTop);
-                })
-            })
-        }
-    }
 </script>
 
 </html>

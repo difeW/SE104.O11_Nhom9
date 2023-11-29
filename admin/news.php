@@ -11,7 +11,7 @@ if (isset($_GET['id'])) {
 	$sql = "SELECT  n.* , a.name , a.image FROM news n, account a
 	WHERE n.author =  a.id and n.id = $id";
 } else {
-	$sql = "SELECT n.*,a.name,a.image FROM news n, account a 
+	$sql = "SELECT n.*,a.name,a.image FROM news n, account a
 	WHERE n.author = a.id and status = 0 and n.title like '%$search%' ORDER BY ordering";
 }
 
@@ -42,53 +42,16 @@ $news = pagination($sql, $from, $sotinmottrang);
 ?>
 
 <!-- breadcrumbs-area-start -->
-<div class="breadcrumbs-area mb-70">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="breadcrumbs-menu">
-					<ul>
-						<li><a href="#">Home</a></li>
-						<li><a href="#" class="active">News</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
 <!-- breadcrumbs-area-end -->
 <!-- blog-main-area-start -->
 <div class="blog-main-area mb-70">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
-				<div class="single-blog mb-50">
-					<div class="blog-left-title">
-						<h3>Tìm kiếm</h3>
-					</div>
-					<div class="side-form" >
-						<form action="news.php" id="search-new">
-							<input type="text" placeholder="Search...." name="search" />
-							<a href="javascript:{}" onclick="document.getElementById('search-new').submit();"><i class="fa fa-search"></i></a>
-						</form>
-					</div>
+			<div class="col-sm-12 col-md-4">
+				<div id="dataTable_filter" class="dataTables_filter">
+					<a href="addnew.php?name=news" class="btn btn-success btn-sm"><i class="fas fa-plus-circle"></i> Thêm Mới</a>
 				</div>
-				<div class="single-blog mb-50">
-					<?php
-					$hotnews = execute("SELECT n.title, n.id FROM news n
-					WHERE status = 0 ORDER BY id DESC limit 0,5");
-					?>
-					<div class="blog-left-title">
-						<h3>Tin mới</h3>
-					</div>
-					<div class="blog-side-menu">
-						<ul>
-							<?php foreach ($hotnews as $key => $value) { ?>
-								<li><a href="news.php?id=<?php echo $value['id'] ?>"><?php echo get_str($value['title'], 30) ?></a></li>
-							<?php } ?>
-						</ul>
-					</div>
-				</div>
+
 			</div>
 			<div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
 				<div class="blog-main-wrapper">
@@ -96,26 +59,16 @@ $news = pagination($sql, $from, $sotinmottrang);
 						<div class="single-blog-post">
 							<div class="author-destils mb-30">
 								<div class="author-left">
-									<div class="author-img rounded">
-										<a href="#"><img src="admin/public/image/account/<?php echo $value['image'] ?>" alt="man" class="img-circle" /></a>
-									</div>
 									<div class="author-description">
 										<p>Đăng bởi:
 											<a href="#"><span><?php echo $value['name'] ?></span></a>
+											<a href="edit.php?name=new&id=<?php echo $value['id'] ?>" class="btn btn-sm btn-primary" title="Sửa"><i class="far fa-edit"></i></a>
+											<a href="delete.php?id_news=<?php echo $value['id'] ?>" class="btn btn-sm btn-danger" title="Xóa"><i class="far fa-trash-alt"></i></a>
 										</p>
 										<span><?php echo $value['created'] ?></span>
 									</div>
 								</div>
-								<div class="author-right">
-									<span>Chia sẻ:</span>
-									<ul>
-										<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-										<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-										<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-										<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-										<li><a href="#"><i class="fa fa-instagram"></i></a></li>
-									</ul>
-								</div>
+
 							</div>
 							<div class="single-blog-content">
 								<div class="single-blog-title">
@@ -131,9 +84,6 @@ $news = pagination($sql, $from, $sotinmottrang);
 										<a href="news.php?id=<?php echo $value['id'] ?>">Đọc tiếp<i class="fa fa-long-arrow-right"></i></a>
 									<?php } ?>
 								</div>
-								<div class="blog-com">
-									<a href="#">3 comments</a>
-								</div>
 							</div>
 						</div>
 					<?php } ?>
@@ -145,7 +95,7 @@ $news = pagination($sql, $from, $sotinmottrang);
 							$sql = "SELECT  n.* , a.name , a.image FROM news n, account a
 							WHERE n.author =  a.id and n.id = $id";
 						} else {
-							$sql = "SELECT n.*,a.name,a.image FROM news n, account a 
+							$sql = "SELECT n.*,a.name,a.image FROM news n, account a
 							WHERE n.author = a.id and status = 0 and n.title like '%$search%' ORDER BY ordering";
 						}
 						$news = execute($sql);

@@ -501,13 +501,72 @@ pre code {
   padding-right: 0.75rem;
   padding-left: 0.75rem;
   margin-right: auto;
-  margin-left: auto;
 }
-@media (min-width: 576px) {
-  .container {
-    max-width: 540px;
+
+@media only screen and (max-width: 480px) {
+  .header-search form input {
+    font-size: 14px;
+  }
+  .mb-30 {
+    margin-bottom: 10px;
+  }
+  div .control {
+    display: none;
+  }
+  .toolbar {
+    padding: 0 !important;
+  }
+  .shop-main-area #th .row div[class^="col-"] {
+    max-width: 240px;
+    width: 50%;
+  }
+  .product-flag ul > li span {
+    font-size: 10px !important;
+  }
+  .product-details h4 a {
+    font-size: 14px !important;
+  }
+  .product-price ul li {
+    font-size: 14px !important;
+  }
+  .pl-50 {
+    padding: 0 0 0 0 !important;
+  }
+
+  .flex-nav-next,
+  .flex-nav-prev {
+    display: none !important;
+  }
+  .md1200 {
+    display: table;
+  }
+  .header-search {
+    margin-top: 0;
+  }
+  .home-4 .header-mid-area .my-cart {
+    right: 10px;
+  }
+
+  .header-mid-area .my-cart ul li > span {
+    position: absolute;
+    right: -0.5rem;
+    top: 0rem;
+    padding: 0 0.5rem;
+    background: #e63535;
+    border: 0.1rem solid #fff;
+    border-radius: 1rem;
+    font-size: 1.1rem;
+    line-height: 2rem;
+    min-width: 2rem;
+    height: 2rem;
+    width: auto;
+  }
+
+  .shop-left {
+    display: none;
   }
 }
+
 @media (min-width: 768px) {
   .container {
     max-width: 720px;
@@ -1050,7 +1109,7 @@ pre code {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 25%;
     flex: 0 0 25%;
-    max-width: 25%;
+    max-width: 33%;
   }
   .col-md-4 {
     -webkit-box-flex: 0;
@@ -1288,8 +1347,7 @@ pre code {
   .col-lg-9 {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 75%;
-    flex: 0 0 75%;
-    max-width: 75%;
+    flex: 2 0 75%;
   }
   .col-lg-10 {
     -webkit-box-flex: 0;
@@ -1424,8 +1482,8 @@ pre code {
     height: 110px;
   }
   .col-lg-3.col-md-3.col-sm-4.col-xs-12 {
-    padding-top: 46px;
-    max-width: 220px;
+    padding-top: 10px;
+    max-width: 275px;
   }
   .col-lg-6.col-md-6.col-sm-5.col-xs-12 {
     padding-top: 25px;
@@ -1433,6 +1491,9 @@ pre code {
 }
 
 @media (min-width: 1200px) {
+  .col-md-3 {
+    width: 25% !important;
+  }
   .col-xl {
     -ms-flex-preferred-size: 0;
     flex-basis: 0;
@@ -2419,7 +2480,12 @@ textarea.form-control.is-invalid {
   }
   .form-inline .form-control {
     display: inline-block;
-    width: auto;
+    right: calc(100% - 100px);
+    right: -moz-calc(100% - 100px);
+    right: -webkit-calc(100% - 100px);
+    width: calc(100% - 66px);
+    width: -moz-calc(100% - 66px);
+    width: -webkit-calc(100% - 66px);
     vertical-align: middle;
   }
   .form-inline .form-control-plaintext {

@@ -148,3 +148,10 @@ function getdata()
     }
     return $data;
 }
+
+
+function add_to_cart()
+{
+    $product_id = $_POST['product_id'];
+    $quantity = $_POST['quantity'];
+}

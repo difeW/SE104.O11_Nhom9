@@ -11,7 +11,7 @@ if (isset($_GET['id'])) {
 	$sql = "SELECT  n.* , a.name , a.image FROM news n, account a
 	WHERE n.author =  a.id and n.id = $id";
 } else {
-	$sql = "SELECT n.*,a.name,a.image FROM news n, account a 
+	$sql = "SELECT n.*,a.name,a.image FROM news n, account a
 	WHERE n.author = a.id and status = 0 and n.title like '%$search%' ORDER BY ordering";
 }
 
@@ -66,7 +66,7 @@ $news = pagination($sql, $from, $sotinmottrang);
 					<div class="blog-left-title">
 						<h3>Tìm kiếm</h3>
 					</div>
-					<div class="side-form" >
+					<div class="side-form">
 						<form action="news.php" id="search-new">
 							<input type="text" placeholder="Search...." name="search" />
 							<a href="javascript:{}" onclick="document.getElementById('search-new').submit();"><i class="fa fa-search"></i></a>
@@ -97,7 +97,7 @@ $news = pagination($sql, $from, $sotinmottrang);
 							<div class="author-destils mb-30">
 								<div class="author-left">
 									<div class="author-img rounded">
-										<a href="#"><img src="admin/public/image/account/<?php echo $value['image'] ?>" alt="man" class="img-circle" /></a>
+										<a href="#"><img src="admin/public/image/account/<?php echo $value['image'] ?>" class="img-circle" /></a>
 									</div>
 									<div class="author-description">
 										<p>Đăng bởi:
@@ -145,7 +145,7 @@ $news = pagination($sql, $from, $sotinmottrang);
 							$sql = "SELECT  n.* , a.name , a.image FROM news n, account a
 							WHERE n.author =  a.id and n.id = $id";
 						} else {
-							$sql = "SELECT n.*,a.name,a.image FROM news n, account a 
+							$sql = "SELECT n.*,a.name,a.image FROM news n, account a
 							WHERE n.author = a.id and status = 0 and n.title like '%$search%' ORDER BY ordering";
 						}
 						$news = execute($sql);

@@ -90,7 +90,7 @@ session_start();
 
     .btn {
         width: 50%;
-        border: 0;
+        border: none;
         color: white;
         padding: 5px;
         font-size: 18px;
@@ -102,7 +102,6 @@ session_start();
 
     .btn:hover {
         background-color: inherit !important;
-        border: 3px solid whitesmoke !important;
     }
 
     .textbox {
@@ -132,19 +131,24 @@ session_start();
 
     .btn {
         width: 50%;
-        border: 0;
         color: white;
+        border: none;
         padding: 5px;
         font-size: 18px;
         cursor: pointer;
         margin: 12px 0;
         background: #b2b4b8;
         border-radius: 5px;
+        transition: 0.5s;
     }
 
     .btn:hover {
         background-color: inherit !important;
-        border: 3px solid whitesmoke !important;
+        transform: translateY(-8px);
+    }
+
+    .btn:active {
+        transform: translateY(8px);
     }
 
     input[type='text'],
@@ -195,7 +199,7 @@ session_start();
 
     .form {
         width: 700px;
-        margin: 15rem auto;
+        margin: 3rem auto;
         border-radius: 30px;
         padding: 20px;
         justify-content: center;

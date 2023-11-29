@@ -1,5 +1,5 @@
 <?php
-include('header.php');
+include 'header.php';
 ?>
 
 <div class="container-fluid">
@@ -10,15 +10,13 @@ include('header.php');
             <h6 class="m-0 font-weight-bold text-primary"> EDIT Admin Profile </h6>
         </div>
         <div class="card-body">
-
             <!-- cái này update dưới quyền boss -->
             <?php
-
             if (isset($_POST['edit_btn'])) {
                 $id = $_POST['edit_id'];
-                $connection = mysqli_connect("localhost:5500", "root", "", "ban_sach");
+                $conn = mysqli_connect("localhost:3306", "root", "", "ban_sach");
                 $query = "SELECT id, name, email, phone, password, address FROM `account` WHERE id='$id' ";
-                $query_run = mysqli_query($connection, $query);
+                $query_run = mysqli_query($conn, $query);
 
                 foreach ($query_run as $row) {
             ?>
@@ -59,9 +57,9 @@ include('header.php');
             //cái này để update user đang đăng nhập
             if (isset($_POST['edit_acc'])) {
                 $id = $_POST['edit_id'];
-                $connection = mysqli_connect("localhost:5500", "root", "", "ban_sach");
+                $conn = mysqli_connect("localhost:5500", "root", "", "ban_sach");
                 $query = "SELECT id, name, email, phone, password, address FROM `account` WHERE id='$id' ";
-                $query_run = mysqli_query($connection, $query);
+                $query_run = mysqli_query($conn, $query);
 
                 foreach ($query_run as $row) {
                 ?>
